@@ -17,5 +17,10 @@ galaxy_info:
     - debian
     - security
     - sysadmin
+    - opendkim
+    - ubuntu
+    - mail
+    - mailserver
+    - mta
 
 dependencies: []
