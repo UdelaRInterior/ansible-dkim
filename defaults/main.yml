@@ -4,6 +4,39 @@ dkim_create: true
 dkim_selector: email
 dkim_admin_email: example@domain.com
 dkim_domains:
-  - domain1.com
-  - domain2.com
-  - domain3.com
+  - domain1.tls
+  - domain2.tls
+  - domain3.tls
+postfix_smtpd_banner: '$myhostname ESMTP $mail_name (Debian/GNU)'
+postfix_biff: no
+#postfix_delay_warning_time: 4h
+postfix_append_dot_mydomain: no
+postfix_readme_directory: no
+postfix_smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+postfix_smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+postfix_smtpd_use_tls: yes
+postfix_smtpd_tls_session_cache_database: 'btree:${data_directory}/smtpd_scache'
+postfix_smtp_tls_session_cache_database: 'btree:${data_directory}/smtp_scache'
+postfix_virtual_alias_maps: 'regexp:/etc/postfix/virtual.regexp'
+postfix_myhostname: server.tls
+postfix_alias_maps: hash:/etc/aliases 
+postfix_alias_database: hash:/etc/aliases 
+postfix_virtual_alias_domains:
+  - domain1.tls
+  - domain2.tls
+  - domain3.tls
+postfix_mydestination: 
+  - localhost
+postfix_relayhost: ''
+postfix_mynetworks: '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128'
+postfix_mailbox_command: 'procmail -a "$EXTENSION"'
+postfix_mailbox_size_limit: 0
+postfix_recipient_delimiter: +
+postfix_inet_interfaces: all
+postfix_message_size_limit: 62914560
+postfix_compatibility_level: 2
+
+
+
+
+
