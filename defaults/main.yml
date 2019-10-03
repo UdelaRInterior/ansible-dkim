@@ -8,13 +8,13 @@ dkim_domains:
   - domain2.tls
   - domain3.tls
 postfix_smtpd_banner: '$myhostname ESMTP $mail_name (Debian/GNU)'
-postfix_biff: no
+postfix_biff: 'no'
 #postfix_delay_warning_time: 4h
-postfix_append_dot_mydomain: no
-postfix_readme_directory: no
+postfix_append_dot_mydomain: 'no'
+postfix_readme_directory: 'no'
 postfix_smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
 postfix_smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
-postfix_smtpd_use_tls: yes
+postfix_smtpd_use_tls: 'yes'
 postfix_smtpd_tls_session_cache_database: 'btree:${data_directory}/smtpd_scache'
 postfix_smtp_tls_session_cache_database: 'btree:${data_directory}/smtp_scache'
 postfix_virtual_alias_maps: 'regexp:/etc/postfix/virtual.regexp'

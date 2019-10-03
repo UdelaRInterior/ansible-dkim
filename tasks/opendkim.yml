@@ -51,3 +51,11 @@
 
 - name: opendkim is running
   service: name=opendkim state=started enabled=yes
+
+- name: Recursively change ownership of a directory
+  file:
+    path: /etc/opendkim
+    state: directory
+    recurse: yes
+    owner: opendkim
+    group: opendkim

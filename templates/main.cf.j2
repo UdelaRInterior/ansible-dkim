@@ -38,8 +38,8 @@ smtpd_tls_session_cache_database = {{ postfix_smtpd_tls_session_cache_database }
 smtp_tls_session_cache_database = {{ postfix_smtp_tls_session_cache_database }}
 {% endif %}
 
-{% if postfix_alias_domains is defined %}
-virtual_alias_domains = {{ postfix_alias_domains | join(",") }}
+{% if postfix_virtual_alias_domains is defined %}
+virtual_alias_domains = {{ postfix_virtual_alias_domains | join(",") }}
 {% endif %}
 
 {% if postfix_virtual_alias_maps is defined %}
