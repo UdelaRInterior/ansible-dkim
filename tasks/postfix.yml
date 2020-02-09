@@ -1,6 +1,8 @@
 ---
 - name: postfix is installed
-  apt: pkg=postfix state=installed
+  apt: 
+    pkg: postfix
+    state: present
   tags: postfix
 
 - name: postfix is configured
