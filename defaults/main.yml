@@ -26,6 +26,9 @@ dkim_admin_email: "{{ admin_email | default ( omit ) }}"
 #   - domain2.tld
 #   - domain3.tld
 
+## Whether to sign all mails from every subdomain, for each domain.
+dkim_sign_subdomains: false
+
 ## The list of trusted hosts for opendkim
 dkim_trustedhosts:
   - 127.0.0.1

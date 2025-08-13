@@ -38,6 +38,7 @@ See also comments and default values in role's file [`default/main.yml`](default
 | `dkim_admin_email:` | none | e-mail address that manages Opendkim. You must define either `dkim_admin_email` or legacy `admin_email`. |
 | `dkim_trustedhosts:` | `['127.0.0.1','localhost']` | List of trusted hosts for opendkim |
 | `dkim_domains:` | none | List of domains that Opendkim must be configured to sign the mails of. A yaml list of DNS. |
+| `dkim_sign_subdomains:` | false | Whether to sign all mails from every subdomain, for each domain. |
 | `dkim_same_key:` | true | Whether Opendkim must generate and use the same key for all domains or one specific key for each domain.  |
 | `dkim_rsa_keylen:` | 2048 | RSA keylength when generating keys with `opendkim-keygen`. Other currently possible options are 1024 or 4096.  |
 | `dkim_require_safe_keys:` | none | Boolean. If true, key files must be readable and writalbe only by `dkim_user`.  |
