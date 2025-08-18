@@ -47,13 +47,21 @@ See also comments and default values in role's file [`default/main.yml`](default
 a domain for which we have a key.   |
 | `dkim_signed_domains:` | none | [Not implemented yet] `Domain` parameter of `/etc/opendkim.conf`. All the domains that we sign, even if they don't come from `dkim_trusted_hosts`. A list of domains, that we sign for. The `dkim_signed_domains` list must be included in `dkim_domains`list. [Presently defaunt is `Domain *`, control signed messages with other parameters, as `dkim_trusted_hosts` ]  | 
 | `dkim_nameservers:` | none | Nameservers. See details http://www.opendkim.org/staging/opendkim.conf.5.html  |
+| `dkim_conf_override:` | empty | Additional config inserted into /etc/opendkim.conf, such as "Nameservers 127.0.0.1". |
 
 ### Postfix configuration variables
 
-  Variable     |   Default value   |   Description  |
+|  Variable     |   Default value   |   Description  |
 |:-------------------:|:------------------------:|:------------:|
 | `dkim_postfix_config_file:` | /etc/postfix/main.cf | Postfix main configuration file |
 | `dkim_postfix_config:` | see [`vars/main.yml`](vars/main.yml) | List of parameters to be defined in Postfix configuration. Default configuration ensures opendkim is set up as a milter of Postfix to sign mails. You can define additional Postfix parameters using a list union. |
+
+### Operational parameters
+
+|  Variable     |   Default value   |   Description  |
+|:-------------------:|:------------------------:|:------------:|
+| `dkim_generate_only:` | false | Only (false) generate DKIM keys and display records to provide the opportunity for DNS publication, or: (true) generate, display and immediately deploy to opendkim plus restart opendkim in the same run |
+
 
 ## Example playbook
 ```yaml

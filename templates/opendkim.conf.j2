@@ -32,3 +32,5 @@ ReportAddress           {{ dkim_admin_email }}
 Nameservers             {{ dkim_nameservers }}
 {% endif -%}
 
+
+{{ dkim_conf_override | default('') }}
