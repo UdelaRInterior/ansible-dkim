@@ -32,6 +32,7 @@ dkim_sign_subdomains: false
 ## The list of trusted hosts for opendkim
 dkim_trustedhosts:
   - 127.0.0.1
+  - ::1
   - localhost
 
 ## Whether opendkim uses the same key for all domains or one key per domain

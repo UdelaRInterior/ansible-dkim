@@ -36,16 +36,15 @@ See also comments and default values in role's file [`default/main.yml`](default
 |:-------------------:|:------------------------:|:------------:|
 | `dkim_selector:` | email | DKIM Public Key DNS record's selector. The definition of a value specific to the MTA server allows to associate the same domain several DKIM Public Keys as DNS records, one for each server that manages and signs mail of the domain.  |
 | `dkim_admin_email:` | none | e-mail address that manages Opendkim. You must define either `dkim_admin_email` or legacy `admin_email`. |
-| `dkim_trustedhosts:` | `['127.0.0.1','localhost']` | List of trusted hosts for opendkim |
+| `dkim_trustedhosts:` | `[127.0.0.1, ::1, localhost]` | List of trusted hosts for opendkim. All mail messages generated in one of these hosts will be signed, and shoud be send from... one of `dkim_domains` |
 | `dkim_domains:` | none | List of domains that Opendkim must be configured to sign the mails of. A yaml list of DNS. |
 | `dkim_sign_subdomains:` | false | Whether to sign all mails from every subdomain, for each domain. |
 | `dkim_same_key:` | true | Whether Opendkim must generate and use the same key for all domains or one specific key for each domain.  |
 | `dkim_rsa_keylen:` | 2048 | RSA keylength when generating keys with `opendkim-keygen`. Other currently possible options are 1024 or 4096.  |
 | `dkim_require_safe_keys:` | none | Boolean. If true, key files must be readable and writalbe only by `dkim_user`.  |
-| `dkim_trusted_hosts:` | [127.0.0.1; ::1; localhost]  | all mail messages generated in one of these hosts will be signed, and shoud be send from |
 |`dkim_dns_record_pause:` | 0 | The time (in seconds) the role will pause to show the DNS records with the public keys that must be configured.  |
 a domain for which we have a key.   |
-| `dkim_signed_domains:` | none | [Not implemented yet] `Domain` parameter of `/etc/opendkim.conf`. All the domains that we sign, even if they don't come from `dkim_trusted_hosts`. A list of domains, that we sign for. The `dkim_signed_domains` list must be included in `dkim_domains`list. [Presently defaunt is `Domain *`, control signed messages with other parameters, as `dkim_trusted_hosts` ]  | 
+| `dkim_signed_domains:` | none | [Not implemented yet] `Domain` parameter of `/etc/opendkim.conf`. All the domains that we sign, even if they don't come from `dkim_trusted_hosts`. A list of domains, that we sign for. The `dkim_signed_domains` list must be included in `dkim_domains` list. [Presently defaunt is `Domain *`, control signed messages with other parameters, as `dkim_trusted_hosts` ]  | 
 | `dkim_nameservers:` | none | Nameservers. See details http://www.opendkim.org/staging/opendkim.conf.5.html  |
 | `dkim_conf_override:` | empty | Additional config inserted into /etc/opendkim.conf, such as "Nameservers 127.0.0.1". |
 
@@ -62,6 +61,14 @@ a domain for which we have a key.   |
 |:-------------------:|:------------------------:|:------------:|
 | `dkim_generate_only:` | false | Only (false) generate DKIM keys and display records to provide the opportunity for DNS publication, or: (true) generate, display and immediately deploy to opendkim plus restart opendkim in the same run |
 
+### Role's data directories
+
+|  Variable           |       Default value   |   Description  |
+|:-------------------:|:---------------------:|:------------:|
+| `dkim_keys_to_upload_dir:` | none | if set to the path of a folder contianing needed keys or part of them, the role will upload these keys instead of creaitng them, and create the other ones  |
+| `dkim_download_keys_dir:` | none | if set to the path of a folder, the role will download there the keys it generates. it can be the same path as the precedent one. it will then contain all the keys. |
+
+Be careful: these folders will contain sensitive data. the rolo manages no encryption nor doesn't any security check.
 
 ## Example playbook
 ```yaml
@@ -78,7 +85,7 @@ a domain for which we have a key.   |
       dkim_keyfile: domain1.tld
       dkim_same_key: false
       dkim_nameservers: 10.0.0.2
-      dkim_trusted_hosts:
+      dkim_trustedhosts:
        - 10.0.0.0/16
 
 ```
