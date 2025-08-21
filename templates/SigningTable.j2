@@ -1,3 +1,6 @@
 {% for domain in dkim_domains %}
 *@{{ domain }} {{ dkim_selector }}._domainkey.{{ domain }}
+{% if dkim_sign_subdomains %}
+*@*.{{ domain }} {{ dkim_selector }}._domainkey.{{ domain }}
+{% endif %}
 {% endfor %}
