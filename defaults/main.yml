@@ -7,6 +7,8 @@ dkim_default_config_file: /etc/default/opendkim
 dkim_opendkim_config_dir: /etc/opendkim
 dkim_opendkim_run_dir: /var/run/opendkim
 
+dkim_opendkim_socket: inet:12301@localhost
+
 dkim_user: opendkim
 dkim_group: opendkim
 
