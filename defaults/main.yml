@@ -13,6 +13,11 @@ dkim_user: opendkim
 dkim_group: opendkim
 
 ### DKIM  configuration variables
+# OpenDKIM act as signer of dkim_domains
+dkim_mode_signer: true
+# OpenDKIM act as verifier of untrusted messages
+dkim_mode_verifer: true
+
 ## The "selector" for opendkim keys and DNS records generation
 dkim_selector: email
 

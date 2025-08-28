@@ -5,7 +5,7 @@ Domain                  *
 ExternalIgnoreList      refile:{{ dkim_opendkim_config_dir }}/TrustedHosts
 InternalHosts           refile:{{ dkim_opendkim_config_dir }}/TrustedHosts
 LogWhy                  yes
-Mode                    sv
+Mode                    {{ dkim_mode_signer | ternary('s', '') }}{{ dkim_mode_verifer | ternary('v', '') }}
 PidFile                 {{  dkim_opendkim_run_dir }}/opendkim.pid
 SignatureAlgorithm      rsa-sha256
 Socket                  {{ dkim_opendkim_socket }}
@@ -25,7 +25,7 @@ KeyTable                refile:{{ dkim_opendkim_config_dir }}/KeyTable
 SigningTable            refile:{{ dkim_opendkim_config_dir }}/SigningTable
 {% endif %}
 {% if dkim_require_safe_keys is defined %}
-dkim_require_safe_keys             {{ dkim_require_safe_keys }}
+RequireSafeKeys         {{ dkim_require_safe_keys | ternary('yes','no') }}
 {% endif %}
 ReportAddress           {{ dkim_admin_email }}
 {% if dkim_nameservers is defined and dkim_nameservers | count > 0 %}
