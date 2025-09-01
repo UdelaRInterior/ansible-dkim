@@ -59,7 +59,6 @@
     dest: '{{ dkim_opendkim_config_dir }}/keys'
     owner: '{{ dkim_user }}'
     group: '{{ dkim_group }}'
-
   when: dkim_keys_to_upload_dir is defined
 
 - name: generate opendkim keys

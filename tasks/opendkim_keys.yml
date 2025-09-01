@@ -24,7 +24,7 @@
     owner: '{{ dkim_user }}'
     group: '{{ dkim_group }}'
 
-- name: optionally dowload dkim keys
+- name: optionally download dkim keys
   ansible.builtin.fetch:
     src: '{{dkim_key_dir }}/{{ item }}'
     dest: '{{ dkim_download_keys_dir }}'

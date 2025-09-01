@@ -64,10 +64,10 @@ See also comments and default values in role's file [`default/main.yml`](default
 
 |  Variable           |       Default value   |   Description  |
 |:-------------------:|:---------------------:|:------------:|
-| `dkim_keys_to_upload_dir:` | none | if set to the path of a folder contianing needed keys or part of them, the role will upload these keys instead of creaitng them, and create the other ones  |
-| `dkim_download_keys_dir:` | none | if set to the path of a folder, the role will download there the keys it generates. it can be the same path as the precedent one. it will then contain all the keys. |
+| `dkim_keys_to_upload_dir:` | none | if set to a folder's path containing needed keys or part of them, the role will upload these keys instead of creating them, and create the ones missing  |
+| `dkim_download_keys_dir:` | none | if set to a folder's path, the role will download there the keys it generates. It can be the same path as the previous one, it will then contain all the keys. |
 
-Be careful: these folders will contain sensitive data. the rolo manages no encryption nor doesn't any security check.
+Be careful: these folders will contain sensitive data. the role manages no encryption nor does it check anything security-wise.
 
 ## Example playbook
 ```yaml
