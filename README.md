@@ -43,7 +43,7 @@ See also comments and default values in role's file [`default/main.yml`](default
 | `dkim_rsa_keylen:` | 2048 | RSA keylength when generating keys with `opendkim-keygen`. Other currently possible options are 1024 or 4096.  |
 | `dkim_require_safe_keys:` | none | Boolean. If true, key files must be readable and writable only by `dkim_user`.  |
 | `dkim_dns_record_pause:` | 0 | [Not implemented yet] The time (in seconds) the role will pause to show the DNS records with the public keys that must be configured.  |
-| `dkim_signed_domains:` | none | [Not implemented yet] `Domain` parameter of `/etc/opendkim.conf`. All the domains that we sign, even if they don't come from a domain for which we have a key.  |
+| `dkim_signed_domains:` | none | [Not implemented yet] `Domain` parameter of `/etc/opendkim.conf`. All the domains that we sign, even if they don't come from `dkim_trustedhosts`. The `dkim_signed_domains` list must be included in `dkim_domains` list. [Current default is `Domain *`, control signed messages with other parameters, such as `dkim_trustedhosts`]  | 
 | `dkim_nameservers:` | none | Nameservers. See details http://www.opendkim.org/staging/opendkim.conf.5.html  |
 | `dkim_conf_override:` | none | Additional config inserted into /etc/opendkim.conf, such as "Nameservers 127.0.0.1".  |
 
