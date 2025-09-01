@@ -7,12 +7,12 @@ dkim_default_config_file: /etc/default/opendkim
 dkim_opendkim_config_dir: /etc/opendkim
 dkim_opendkim_run_dir: /var/run/opendkim
 
-dkim_opendkim_socket: inet:12301@localhost
-
 dkim_user: opendkim
 dkim_group: opendkim
 
-### DKIM  configuration variables
+### DKIM configuration variables
+# Socket location for OpenDKIM
+dkim_opendkim_socket: inet:12301@localhost
 # OpenDKIM act as signer of dkim_domains
 dkim_mode_signer: true
 # OpenDKIM act as verifier of untrusted messages
@@ -63,7 +63,7 @@ dkim_rsa_keylen: 2048
 dkim_mta: postfix
 
 # Weather key files have to be read and write allowed only to owner
-# dkim_require_safe_keys: False
+# dkim_require_safe_keys: false
 
 dkim_postfix_config_file: /etc/postfix/main.cf
 
