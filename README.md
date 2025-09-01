@@ -26,8 +26,9 @@ See also comments and default values in role's file [`default/main.yml`](default
 |:-------------------:|:------------------------:|:------------:|
 | `dkim_default_config_file:` | /etc/default/opendkim | Opendkim default values configuration file |
 | `dkim_opendkim_config_dir:` | /etc/opendkim | Opendkim configuration directory |
-| `dkim_user:` | opendkim | linux user that runs Opendkim |
-| `dkim_group:` | opendkim | linux group that runs Opendkim |
+| `dkim_opendkim_run_dir:` | /var/run/opendkim | Opendkim running .pid file directory |
+| `dkim_user:` | opendkim | unix user that runs Opendkim |
+| `dkim_group:` | opendkim | unix group that runs Opendkim |
 
 ### Opendkim configuration parameters
 
@@ -35,11 +36,16 @@ See also comments and default values in role's file [`default/main.yml`](default
 |:-------------------:|:------------------------:|:------------:|
 | `dkim_selector:` | email | DKIM Public Key DNS record's selector. The definition of a value specific to the MTA server allows to associate the same domain several DKIM Public Keys as DNS records, one for each server that manages and signs mail of the domain.  |
 | `dkim_admin_email:` | none | e-mail address that manages Opendkim. You must define either `dkim_admin_email` or legacy `admin_email`. |
-| `dkim_trustedhosts:` | `['127.0.0.1','localhost']` | List of trusted hosts for opendkim |
+| `dkim_trustedhosts:` | `[127.0.0.1, ::1, localhost]` | List of trusted hosts for opendkim. All mail messages generated in one of these hosts will be signed, and should be sent from... one of `dkim_domains` |
 | `dkim_domains:` | none | List of domains that Opendkim must be configured to sign the mails of. A yaml list of DNS. |
+| `dkim_sign_subdomains:` | false | Whether to sign all mails from every subdomain, for each domain. |
 | `dkim_same_key:` | true | Whether Opendkim must generate and use the same key for all domains or one specific key for each domain.  |
 | `dkim_rsa_keylen:` | 2048 | RSA keylength when generating keys with `opendkim-keygen`. Other currently possible options are 1024 or 4096.  |
-| `dkim_conf_override:` | empty | Additional config inserted into /etc/opendkim.conf, such as "Nameservers 127.0.0.1". |
+| `dkim_require_safe_keys:` | none | Boolean. If true, key files must be readable and writable only by `dkim_user`.  |
+| `dkim_dns_record_pause:` | 0 | [Not implemented yet] The time (in seconds) the role will pause to show the DNS records with the public keys that must be configured.  |
+| `dkim_signed_domains:` | none | [Not implemented yet] `Domain` parameter of `/etc/opendkim.conf`. All the domains that we sign, even if they don't come from `dkim_trustedhosts`. The `dkim_signed_domains` list must be included in `dkim_domains` list. [Current default is `Domain *`, control signed messages with other parameters, such as `dkim_trustedhosts`]  | 
+| `dkim_nameservers:` | none | Nameservers. See details http://www.opendkim.org/staging/opendkim.conf.5.html  |
+| `dkim_conf_override:` | none | Additional config inserted into /etc/opendkim.conf, such as "Nameservers 127.0.0.1".  |
 
 ### Postfix configuration variables
 
@@ -54,6 +60,14 @@ See also comments and default values in role's file [`default/main.yml`](default
 |:-------------------:|:------------------------:|:------------:|
 | `dkim_generate_only:` | false | Only (false) generate DKIM keys and display records to provide the opportunity for DNS publication, or: (true) generate, display and immediately deploy to opendkim plus restart opendkim in the same run |
 
+### Role's data directories
+
+|  Variable           |       Default value   |   Description  |
+|:-------------------:|:---------------------:|:------------:|
+| `dkim_keys_to_upload_dir:` | none | if set to a folder's path containing needed keys or part of them, the role will upload these keys instead of creating them, and create the ones missing  |
+| `dkim_download_keys_dir:` | none | if set to a folder's path, the role will download there the keys it generates. It can be the same path as the previous one, it will then contain all the keys. |
+
+Be careful: these folders will contain sensitive data. the role manages no encryption nor does it check anything security-wise.
 
 ## Example playbook
 ```yaml
@@ -67,7 +81,12 @@ See also comments and default values in role's file [`default/main.yml`](default
       dkim_domains:
        - domain1.tld
        - domain2.tld
+      dkim_keyfile: domain1.tld
       dkim_same_key: false
+      dkim_nameservers: 10.0.0.2
+      dkim_trustedhosts:
+       - 10.0.0.0/16
+
 ```
 
 ### License

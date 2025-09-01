@@ -12,7 +12,7 @@
   lineinfile:
     dest: "{{ dkim_default_config_file }}"
     regexp: '^SOCKET='
-    line: 'SOCKET="inet:12301@localhost"'
+    line: 'SOCKET="{{ dkim_opendkim_socket }}"'
   notify:
    - restart opendkim
 
@@ -52,6 +52,14 @@
   when: not dkim_generate_only
   notify:
    - restart opendkim
+
+- name: optionally upload dkim keys
+  ansible.builtin.copy:
+    src: '{{ dkim_keys_to_upload_dir }}'
+    dest: '{{ dkim_opendkim_config_dir }}/keys'
+    owner: '{{ dkim_user }}'
+    group: '{{ dkim_group }}'
+  when: dkim_keys_to_upload_dir is defined
 
 - name: generate opendkim keys
   include_tasks: opendkim_keys.yml

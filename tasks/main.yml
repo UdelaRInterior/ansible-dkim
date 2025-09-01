@@ -14,6 +14,7 @@
 - import_tasks: opendkim.yml
 
 - import_tasks: "{{ dkim_mta }}.yml"
+  when: dkim_postfix_config | length() > 0
 
 - include_tasks: dns_records.yml
   loop: '{{ dkim_domains if dkim_domains is defined else [] }}'
