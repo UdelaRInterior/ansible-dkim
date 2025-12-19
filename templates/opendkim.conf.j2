@@ -5,7 +5,9 @@ Domain                  *
 ExternalIgnoreList      refile:{{ dkim_opendkim_config_dir }}/TrustedHosts
 InternalHosts           refile:{{ dkim_opendkim_config_dir }}/TrustedHosts
 LogWhy                  yes
+{% if dkim_mode_signer or dkim_mode_verifier %}
 Mode                    {{ dkim_mode_signer | ternary('s', '') }}{{ dkim_mode_verifier | ternary('v', '') }}
+{% endif %}
 PidFile                 {{  dkim_opendkim_run_dir }}/opendkim.pid
 SignatureAlgorithm      rsa-sha256
 Socket                  {{ dkim_opendkim_socket }}
