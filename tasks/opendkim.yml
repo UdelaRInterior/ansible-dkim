@@ -74,4 +74,11 @@
     enabled: yes
   when: dkim_service_enabled
 
+- name: opendkim is stopped
+  service:
+    name: opendkim
+    state: stopped
+    enabled: no
+  when: not dkim_service_enabled
+
 ...
