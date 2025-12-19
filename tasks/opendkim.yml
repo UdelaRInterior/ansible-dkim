@@ -72,5 +72,6 @@
     name: opendkim
     state: started
     enabled: yes
+  when: dkim_service_enabled
 
 ...

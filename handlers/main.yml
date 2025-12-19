@@ -5,6 +5,7 @@
   service:
     name: opendkim
     state: restarted
+  when: dkim_service_enabled
 
 - name: opendkim - restart postfix
   service:
